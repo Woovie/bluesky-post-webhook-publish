@@ -12,7 +12,9 @@ steps:
     displayName: Install Terraform
   
   - script: |
-      ls -lah $(Build.Repository.LocalPath)
+      ls -lah $(Build.Repository.LocalPath) &&
+      ls -lah ${PWD} &&
+      ls -lah $(Build.Repository.LocalPath)/terraform
 
   - script: |
       cp -v $(Build.Repository.LocalPath)/terraform/generics/azure-init.tf $(Build.Repository.LocalPath)/terraform/production/{,initial-creation/{create-storage,move-state-to-storage}/}
