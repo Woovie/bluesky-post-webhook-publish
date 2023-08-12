@@ -12,9 +12,9 @@ steps:
     displayName: Install Terraform
 
   - script: |
-      cp -v $(Build.Repository.LocalPath)/terraform/production/generics/azure-init.tf $(Build.Repository.LocalPath)/terraform/production/{,initial-creation/{create-storage,move-state-to-storage}/}
+      echo $(Build.Repository.LocalPath)/terraform/production/{,initial-creation/{create-storage,move-state-to-storage}/} | tr ' ' '\n' | while read dir; do cp -v $(Build.Repository.LocalPath)/terraform/production/generics/azure-init.tf ${dir}; done
     displayName: Copy Azure provider data to subfolders
-  
+
   - script: |
       terraform init
     workingDirectory: $(Build.Repository.LocalPath)/terraform/production/initial-creation/create-storage/
