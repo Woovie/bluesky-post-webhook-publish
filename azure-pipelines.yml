@@ -7,7 +7,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-  - task: TerraformInstaller
+  - task: TerraformInstaller@0
     displayName: Install Terraform
   
   - script: |
