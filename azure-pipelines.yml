@@ -12,24 +12,24 @@ steps:
     displayName: Install Terraform
   
   - script: |
-      cp -v terraform/generics/azure-init.tf terraform/production/{,initial-creation/{create-storage,move-state-to-storage}/}
+      cp -v $(Agent.BuildDirectory)/terraform/generics/azure-init.tf $(Agent.BuildDirectory)/terraform/production/{,initial-creation/{create-storage,move-state-to-storage}/}
     displayName: Copy Azure provider data to subfolders
   
   - script: |
       terraform init
-    workingDirectory: terraform/production/initial-creation/create-storage/
+    workingDirectory: $(Agent.BuildDirectory)/terraform/production/initial-creation/create-storage/
     displayName: Create storage for Terraform state files - Terraform initialize
 
   - script: |
       terraform plan
-    workingDirectory: terraform/production/initial-creation/create-storage/
+    workingDirectory: $(Agent.BuildDirectory)/terraform/production/initial-creation/create-storage/
     displayName: Create storage for Terraform state files - Terraform plan
 
   - script: |
       terraform apply
-    workingDirectory: terraform/production/initial-creation/create-storage/
+    workingDirectory: $(Agent.BuildDirectory)/terraform/production/initial-creation/create-storage/
     displayName: Create storage for Terraform state files - Terraform apply
 
   - script: |
-      cp -v terraform/production/initial-creation/{create-storage/terraform.tfstate,move-state-to-storage/}
+      cp -v $(Agent.BuildDirectory)/terraform/production/initial-creation/{create-storage/terraform.tfstate,move-state-to-storage/}
     displayName: Copy Terraform state to another folder to migrate state into blob storage
