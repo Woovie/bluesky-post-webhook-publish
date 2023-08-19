@@ -15,5 +15,5 @@ variable "SUBSCRIPTION_ID" {
 provider "azurerm" {
   # skip_provider_registration = true # This is only required when the User, Service Principal, or Identity running Terraform lacks the permissions to register Azure Resource Providers.
   features {}
-  subscription_id = var.SUBSCRIPTION_ID != "" ? var.SUBSCRIPTION_ID : getenv("SUBSCRIPTION_ID")
+  subscription_id = var.SUBSCRIPTION_ID
 }
