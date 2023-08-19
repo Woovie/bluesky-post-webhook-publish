@@ -14,6 +14,13 @@ steps:
   - script: echo $(Build.Repository.LocalPath)/terraform/production/{,initial-creation/{create-storage,move-state-to-storage}/} | tr ' ' '\n' | while read dir; do cp -v $(Build.Repository.LocalPath)/terraform/production/generics/azure-init.tf ${dir}; done
     displayName: Copy Azure provider data to subfolders
 
+  - task: AzureCLI@2
+    displayName: Login to Azure
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: 'az login'
+    azureSubscription: $(TF_VAR_SUBSCRIPTION_ID)
+
   - script: terraform init
     workingDirectory: $(Build.Repository.LocalPath)/terraform/production/initial-creation/create-storage/
     displayName: Create storage for Terraform state files - Terraform initialize
