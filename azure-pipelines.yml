@@ -21,6 +21,7 @@ steps:
       scriptLocation: 'inlineScript'
       inlineScript: 'az login'
       azureSubscription: $(TF_VAR_SUBSCRIPTION_ID)
+      connectedServiceNameARM: $(TF_VAR_SUBSCRIPTION_ID)
 
   - script: terraform init
     workingDirectory: $(Build.Repository.LocalPath)/terraform/production/initial-creation/create-storage/
