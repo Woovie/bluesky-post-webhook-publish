@@ -5,7 +5,7 @@ trigger:
 
 pool:
   vmImage: 'ubuntu-latest'
-  name: default
+  name: azure pipelines
 
 steps:
   - task: TerraformInstaller@0
