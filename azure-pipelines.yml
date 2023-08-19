@@ -16,10 +16,11 @@ steps:
 
   - task: AzureCLI@2
     displayName: Login to Azure
-    scriptType: 'bash'
-    scriptLocation: 'inlineScript'
-    inlineScript: 'az login'
-    azureSubscription: $(TF_VAR_SUBSCRIPTION_ID)
+    inputs:
+      scriptType: 'bash'
+      scriptLocation: 'inlineScript'
+      inlineScript: 'az login'
+      azureSubscription: $(TF_VAR_SUBSCRIPTION_ID)
 
   - script: terraform init
     workingDirectory: $(Build.Repository.LocalPath)/terraform/production/initial-creation/create-storage/
