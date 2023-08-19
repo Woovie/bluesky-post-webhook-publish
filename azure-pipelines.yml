@@ -10,29 +10,35 @@ pool:
 steps:
   - task: TerraformInstaller@0
     displayName: Install Terraform
+    inputs:
+      terraformVersion: latest
 
   - script: echo $(Build.Repository.LocalPath)/terraform/production/{,initial-creation/{create-storage,move-state-to-storage}/} | tr ' ' '\n' | while read dir; do cp -v $(Build.Repository.LocalPath)/terraform/production/generics/azure-init.tf ${dir}; done
     displayName: Copy Azure provider data to subfolders
 
-  - task: AzureCLI@2
-    displayName: Login to Azure
-    inputs:
-      scriptType: 'bash'
-      scriptLocation: 'inlineScript'
-      inlineScript: 'az login'
-      azureSubscription: AzureToADOConnection
-
-  - script: terraform init
-    workingDirectory: $(Build.Repository.LocalPath)/terraform/production/initial-creation/create-storage/
+  - task: TerraformCLI@0
     displayName: Create storage for Terraform state files - Terraform initialize
+    inputs:
+      command: init
+      workingDirectory: $(Build.Repository.LocalPath)/terraform/production/initial-creation/create-storage/
+      environmentServiceName: AzureToADOConnection
+      allowTelemetryCollection: false
 
-  - script: terraform plan
-    workingDirectory: $(Build.Repository.LocalPath)/terraform/production/initial-creation/create-storage/
+  - task: TerraformCLI@0
     displayName: Create storage for Terraform state files - Terraform plan
+    inputs:
+      command: plan
+      workingDirectory: $(Build.Repository.LocalPath)/terraform/production/initial-creation/create-storage/
+      environmentServiceName: AzureToADOConnection
+      allowTelemetryCollection: false
 
-  - script: terraform apply
-    workingDirectory: $(Build.Repository.LocalPath)/terraform/production/initial-creation/create-storage/
+  - task: TerraformCLI@0
     displayName: Create storage for Terraform state files - Terraform apply
+    inputs:
+      command: apply
+      workingDirectory: $(Build.Repository.LocalPath)/terraform/production/initial-creation/create-storage/
+      environmentServiceName: AzureToADOConnection
+      allowTelemetryCollection: false
 
   - script: cp -v $(Build.Repository.LocalPath)/terraform/production/initial-creation/{create-storage/terraform.tfstate,move-state-to-storage/}
     displayName: Copy Terraform state to another folder to migrate state into blob storage
