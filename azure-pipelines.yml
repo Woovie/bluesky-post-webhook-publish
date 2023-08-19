@@ -14,7 +14,7 @@ steps:
   - script: echo $(Build.Repository.LocalPath)/terraform/production/{,initial-creation/{create-storage,move-state-to-storage}/} | tr ' ' '\n' | while read dir; do cp -v $(Build.Repository.LocalPath)/terraform/production/generics/azure-init.tf ${dir}; done
     displayName: Copy Azure provider data to subfolders
 
-  - script: echo $(subscriptionId) | wc -l
+  - script: echo $env:subscriptionId | wc -l
     displayName: Test env var is valid?
     env:
       subscriptionId: $(TF_VAR_SUBSCRIPTION_ID)
@@ -25,7 +25,7 @@ steps:
       scriptType: 'bash'
       scriptLocation: 'inlineScript'
       inlineScript: 'az login'
-      azureSubscription: $(subscriptionId)
+      azureSubscription: $env:subscriptionId
     env:
       subscriptionId: $(TF_VAR_SUBSCRIPTION_ID)
 
