@@ -1,10 +1,10 @@
 resource "azurerm_resource_group" "tfstate" {
-  name     = "tfrgprod"
+  name     = "tf-state-store"
   location = "East US"
 }
 
 resource "azurerm_storage_account" "tfstate" {
-  name                     = "tfstorageprod"
+  name                     = "akamikebbskytfstatestore"
   resource_group_name      = azurerm_resource_group.tfstate.name
   location                 = azurerm_resource_group.tfstate.location
   account_tier             = "Standard"
@@ -12,7 +12,7 @@ resource "azurerm_storage_account" "tfstate" {
 }
 
 resource "azurerm_storage_container" "tfstate" {
-  name                  = "tfcontainerprod"
+  name                  = "tf-state-container"
   storage_account_name  = azurerm_storage_account.tfstate.name
   container_access_type = "private"
 }

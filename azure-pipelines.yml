@@ -40,5 +40,8 @@ steps:
       environmentServiceName: AzureToADOConnection
       allowTelemetryCollection: false
 
+  - publish: $(Build.Repository.LocalPath)/terraform/production/initial-creation/create-storage/terraform.tfstate
+    displayName: Provide state file as an artifact
+
   - script: cp -v $(Build.Repository.LocalPath)/terraform/production/initial-creation/{create-storage/terraform.tfstate,move-state-to-storage/}
     displayName: Copy Terraform state to another folder to migrate state into blob storage
