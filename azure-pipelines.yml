@@ -18,7 +18,7 @@ steps:
     workingDirectory: $(Build.Repository.LocalPath)/terraform/production/initial-creation/create-storage/
     displayName: Create storage for Terraform state files - Terraform initialize
 
-  - script: TF_LOG=TRACE terraform plan
+  - script: terraform plan
     workingDirectory: $(Build.Repository.LocalPath)/terraform/production/initial-creation/create-storage/
     displayName: Create storage for Terraform state files - Terraform plan
 
